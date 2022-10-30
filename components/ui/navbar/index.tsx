@@ -43,9 +43,12 @@ export default function Navbar() {
                     src="/images/page_logo.png"
                     alt="Workflow"
                   /> */}
-                  <h3 className="text-gray-100 font-bold text-xl">LOGO</h3>
+                  <h3 className="text-gray-100 font-bold text-xl">
+                    <img className="hidden lg:inline-block h-20" src="/images/logo.png" alt="" />
+                    <img className="lg:hidden sm:inline-block h-12" src="/images/logo.png" alt="" />
+                  </h3>
                 </div>
-                <div className="hidden sm:block sm:ml-6">
+                <div className="hidden lg:flex md:flex items-center sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <ActiveLink
@@ -66,7 +69,7 @@ export default function Navbar() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {" "}
-                <div className="text-gray-300 self-center mr-2">
+                <div className="hidden lg:block md:block text-gray-300 self-center mr-2">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-purple-100 text-purple-800">
                     <svg
                       className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400"
@@ -91,7 +94,6 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
