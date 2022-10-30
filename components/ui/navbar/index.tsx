@@ -44,8 +44,8 @@ export default function Navbar() {
                     alt="Workflow"
                   /> */}
                   <h3 className="text-gray-100 font-bold text-xl">
-                    <img className="hidden lg:inline-block h-20" src="/images/logo.png" alt="" />
-                    <img className="lg:hidden sm:inline-block h-12" src="/images/logo.png" alt="" />
+                    <img className="h-20" src="/images/logo.png" alt="" />
+                    {/* <img className="lg:hidden sm:inline-block h-12" src="/images/logo.png" alt="" /> */}
                   </h3>
                 </div>
                 <div className="hidden lg:flex md:flex items-center sm:ml-6">
