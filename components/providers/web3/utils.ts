@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { ethers, providers } from "ethers";
+import { ethers } from "ethers";
 import { setupHooks, Web3Hook } from "@hooks/web3/setupHooks";
 import { Web3Dependencies } from "@_types/hooks";
 import { NftMarketContract } from "../../../types/nftMarketContract";
@@ -59,15 +59,18 @@ export const createWeb3State = ({
 
 const NETWORK_ID = process.env.NEXT_PUBLIC_NETWORK_ID;
 
+const JSON_RPC = process.env.NEXT_PUBLIC_TARGET_CHAIN_RPC;
+
 export const loadContract = async (
-  name: string,
-  provider: providers.Web3Provider
+  name: string
 ): Promise<NftMarketContract> => {
   if (!NETWORK_ID) return Promise.reject("Network ID is not defined!");
 
   const res = await fetch(`/contracts/${name}.json`);
 
   const Artifact = await res.json();
+
+  const provider = new ethers.providers.JsonRpcProvider(JSON_RPC);
 
   if (Artifact.networks[NETWORK_ID].address) {
     const contract = new ethers.Contract(
