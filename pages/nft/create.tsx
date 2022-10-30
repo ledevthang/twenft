@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { ExclamationIcon } from "@heroicons/react/solid";
 import { useNetwork } from "@hooks/web3";
 import { withToast } from "../../utils/toast";
+import { useRouter } from "next/router";
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
 const NftCreate: NextPage = () => {
@@ -30,6 +31,7 @@ const NftCreate: NextPage = () => {
     ],
   });
 
+  const router = useRouter();
   const getSignedData = async () => {
     const messageToSign = await axios.get("/api/verify");
     const accounts = (await ethereum?.request({
@@ -127,10 +129,10 @@ const NftCreate: NextPage = () => {
 
   const createNft = async () => {
     try {
-      const nftRes = await axios.get(nftURI);
-      const content = nftRes.data;
+      const nftRes = await (await fetch(nftURI)).json();
+      console.log(nftRes);
 
-      Object.keys(content).forEach((key) => {
+      Object.keys(nftRes).forEach((key) => {
         if (!ALLOWED_FIELDS.includes(key))
           throw new Error("Invalid JSON structure");
       });
@@ -143,6 +145,10 @@ const NftCreate: NextPage = () => {
         }
       );
 
+      const receipt = await tx.wait();
+      if (receipt.status === 1) {
+        router.push("/");
+      }
       return tx;
     } catch (error: any) {
       let message;
