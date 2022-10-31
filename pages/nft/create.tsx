@@ -12,6 +12,7 @@ import { ExclamationIcon } from "@heroicons/react/solid";
 import { useNetwork } from "@hooks/web3";
 import { withToast } from "../../utils/toast";
 import { useRouter } from "next/router";
+
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
 const NftCreate: NextPage = () => {
@@ -75,11 +76,11 @@ const NftCreate: NextPage = () => {
         error: "Image upload error",
       });
 
-      const data = res.data as PinataRes;
+      const data = res.data;
 
       setNftMeta({
         ...nftMeta,
-        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/${data.IpfsHash}`,
+        image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/${data.Hash}`,
       });
     } catch (e: any) {
       console.error(e.message);
@@ -119,9 +120,11 @@ const NftCreate: NextPage = () => {
         error: "Metadata upload error",
       });
 
-      const data: PinataRes = res.data;
+      const data: any = res.data;
 
-      setNftURI(`${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/${data.IpfsHash}`);
+      console.log(data);
+
+      setNftURI(`${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/${data}`);
     } catch (error: any) {
       console.log(error.message);
     }
@@ -130,7 +133,6 @@ const NftCreate: NextPage = () => {
   const createNft = async () => {
     try {
       const nftRes = await (await fetch(nftURI)).json();
-      console.log(nftRes);
 
       Object.keys(nftRes).forEach((key) => {
         if (!ALLOWED_FIELDS.includes(key))

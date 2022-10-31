@@ -34,7 +34,7 @@ export const hookFactory: ListedNftsHookFactory =
             meta,
           });
         }
-
+        console.log(nfts);
         return nfts;
       }
     );
