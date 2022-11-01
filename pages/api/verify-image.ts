@@ -9,7 +9,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { FileReq } from "@_types/nft";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { create as ipfsHttpClient } from "ipfs-http-client";
 
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 const infuraSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET_KEY;
