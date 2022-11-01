@@ -20,9 +20,7 @@ const Home: NextPage = () => {
               Mint a NFT to get unlimited ownership forever!
             </p>
           </div>
-          {network.isConnectedToNetwork ? (
-            <NFTList />
-          ) : (
+          {!network.isConnectedToNetwork && (
             <div className="rounded-md bg-yellow-50 p-4 mt-10">
               <div className="flex">
                 <div className="flex-shrink-0">
@@ -50,6 +48,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           )}
+          <NFTList />
         </div>
       </div>
     </BaseLayout>

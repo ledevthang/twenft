@@ -29,12 +29,12 @@ const Web3Provider: FunctionComponent<Web3Type> = ({ children }) => {
 
   useEffect(() => {
     async function initWeb3() {
+      const contract = await loadContract("NFTMarket");
       try {
         const provider = new ethers.providers.Web3Provider(
           window.ethereum as any
         );
 
-        const contract = await loadContract("NFTMarket");
         const signer = provider!.getSigner();
         const signedContract = contract.connect(
           signer
@@ -53,7 +53,7 @@ const Web3Provider: FunctionComponent<Web3Type> = ({ children }) => {
       } catch (error: any) {
         console.log(error?.message);
         setWeb3Api((api) =>
-          createWeb3State({ ...(api as any), isLoading: false })
+          createWeb3State({ ...(api as any), isLoading: false,contract: contract})
         );
       }
     }

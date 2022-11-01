@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["eincode.mypinata.cloud", "gateway.pinata.cloud", "ipfs.io"],
+    domains: ["eincode.mypinata.cloud", "gateway.pinata.cloud","ipfs.io"],
   },
 };
 
