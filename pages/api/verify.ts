@@ -10,6 +10,22 @@ import {
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NftMeta } from "@_types/nft";
 import axios from "axios";
+import { create as ipfsHttpClient } from "ipfs-http-client";
+
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
+const infuraSecretKey = process.env.NEXT_PUBLIC_INFURA_SECRET_KEY;
+
+const auth =
+  "Basic " + Buffer.from(infuraId + ":" + infuraSecretKey).toString("base64");
+
+const client = ipfsHttpClient({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
 
 export default withSession(
   async (req: NextApiRequest & { session: any }, res: NextApiResponse) => {
@@ -27,23 +43,25 @@ export default withSession(
 
         await addressCheckMiddleware(req, res);
 
-        const jsonRes = await axios.post(
-          "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-          {
-            pinataMetadata: {
-              name: uuidv4(),
-            },
-            pinataContent: nft,
-          },
-          {
-            headers: {
-              pinata_api_key: pinataApiKey,
-              pinata_secret_api_key: pinataSecretApiKey,
-            },
-          }
-        );
+        const jsonRes = await client.add(JSON.stringify(nft));
 
-        return res.status(200).send(jsonRes.data);
+        // const jsonRes = await axios.post(
+        //   "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+        //   {
+        //     pinataMetadata: {
+        //       name: uuidv4(),
+        //     },
+        //     pinataContent: nft,
+        //   },
+        //   {
+        //     headers: {
+        //       pinata_api_key: pinataApiKey,
+        //       pinata_secret_api_key: pinataSecretApiKey,
+        //     },
+        //   }
+        // );
+
+        return res.status(200).send(jsonRes.path);
       } catch (error) {
         return res.status(422).send({ message: "Cannot create JSON" });
       }
