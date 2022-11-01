@@ -25,7 +25,6 @@ const NFTItem: FunctionComponent<NftItemProps> = ({
           width={"370"}
           height={"370"}
           layout="responsive"
-          priority={true}
         />
       </div>
       <div className="flex-1 bg-white p-6 flex flex-col justify-between">
