@@ -7,7 +7,7 @@ import WalletBar from "./WalletBar";
 
 const navigation = [
   { name: "Marketplace", href: "/", current: true },
-  { name: "Create", href: "/nft/create", current: false },
+  { name: "Create", href: "/nft/create", current: false }
 ];
 
 function classNames(...classes: string[]) {
@@ -64,6 +64,18 @@ export default function Navbar() {
                         </a>
                       </ActiveLink>
                     ))}
+                    {account.data ? <ActiveLink
+                        key='Profile'
+                        href='/profile'
+                        activeClass="bg-gray-900"
+                      >
+                        <a
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                          aria-current={undefined}
+                        >
+                          Profile
+                        </a>
+                    </ActiveLink> : false}
                   </div>
                 </div>
               </div>
@@ -112,6 +124,18 @@ export default function Navbar() {
                   {item.name}
                 </Disclosure.Button>
               ))}
+              <Disclosure.Button
+                  key='Profile'
+                  as="a"
+                  href='/profile'
+                  className={classNames(
+                    "text-gray-300 hover:bg-gray-700 hover:text-white",
+                    "block px-3 py-2 rounded-md text-base font-medium"
+                  )}
+                  aria-current={undefined}
+                >
+                  Profile
+                </Disclosure.Button>
             </div>
           </Disclosure.Panel>
         </>
